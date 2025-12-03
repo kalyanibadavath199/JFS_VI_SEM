@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Programming Language Inventors</title>
+  <style>
+    :root{--bg:#ffffff;--card:#f5f7fb;--accent:#2563eb;--muted:#475569}
+    body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; margin:0; min-height:100vh; background:#ffffff; color:#0f172a; display:flex; align-items:center; justify-content:center; padding:36px}
+    .container{width:980px; max-width:95%;}
+    h1{font-size:28px; margin:0 0 18px; letter-spacing:0.2px; color:#1e293b}
+    .topbar{display:flex; gap:14px; align-items:center; margin-bottom:18px}
+    .select-wrap{position:relative}
+    label{display:block; font-size:13px; color:#334155; margin-bottom:6px}
+    select{appearance:none; background:linear-gradient(180deg,#3b82f6,#2563eb); border:none; color:#ffffff; padding:12px 38px 12px 12px; border-radius:10px; min-width:360px; font-weight:600}
+    select option{color:#0f172a}
+    .select-wrap::after{content:'▾'; position:absolute; right:12px; top:36px; transform:translateY(-50%); pointer-events:none; color:#ffffff}
+
+    .card{display:grid; grid-template-columns:160px 1fr; gap:18px; align-items:start; background:#ffffff; border:1px solid #e2e8f0; padding:20px; border-radius:14px; box-shadow:0 10px 24px rgba(0,0,0,0.08)}
+    .portrait{width:160px; height:160px; border-radius:20px; overflow:hidden; flex-shrink:0; border:4px solid #e2e8f0; display:flex; align-items:center; justify-content:center; background:#f1f5f9}
+    .portrait img{width:100%; height:100%; object-fit:cover}
+    .info-box{background:#f8fafc; border-radius:10px; padding:16px; min-height:160px; display:flex; flex-direction:column; gap:8px; border:1px solid #e2e8f0}
+    .name{font-size:18px; font-weight:700; color:#0f172a}
+    .lang{font-size:13px; color:var(--accent); font-weight:700}
+    .bio{font-size:14px; color:#475569; line-height:1.45}
+    .meta{margin-top:auto; display:flex; gap:10px; font-size:13px; color:#475569}
+    .meta span{background:#e2e8f0; padding:6px 10px; border-radius:8px}
+
+    footer{margin-top:14px; color:#475569; font-size:13px}
+
+    @media (max-width:700px){.card{grid-template-columns:120px 1fr} .portrait{width:120px;height:120px}}
+  </style>
+</head>
+<body>
+  <main class="container">
+    <h1><strong>Programming Language Inventors</strong></h1>
+    <div class="topbar">
+      <div class="select-wrap">
+        <label for="inventor">Select a programming language inventor:</label>
+        <select id="inventor">
+          <option value="james_gosling">James Gosling (Java)</option>
+          <option value="guido_van_rossum">Guido van Rossum (Python)</option>
+          <option value="dennis_ritchie">Dennis Ritchie (C)</option>
+          <option value="bjarne_stroustrup">Bjarne Stroustrup (C++)</option>
+          <option value="brendan_eich">Brendan Eich (JavaScript)</option>
+          <option value="rasmus_lerdorf">Rasmus Lerdorf (PHP)</option>
+          <option value="yukihiro_matsumoto">Yukihiro Matsumoto (Ruby)</option>
+          <option value="anders_hejlsberg">Anders Hejlsberg (C#)</option>
+          <option value="grace_hopper">Grace Hopper (COBOL)</option>
+          <option value="john_mccarthy">John McCarthy (Lisp)</option>
+        </select>
+      </div>
+    </div>
+
+    <section class="card" id="profile">
+      <div class="portrait" id="portrait">
+        <!-- image injected here -->
+        <img src="" alt="inventor picture" id="portraitImg">
+      </div>
+      <div class="info-box">
+        <div class="name" id="name">James Gosling</div>
+        <div class="lang" id="lang">Java</div>
+        <div class="bio" id="bio">James Gosling led the team that created Java at Sun Microsystems. Java popularized "write once, run anywhere" and became widely used for enterprise and Android development.</div>
+        <div class="meta">
+          <span id="born">Born: 1955</span>
+          <span id="origin">Origin: Canada</span>
+        </div>
+      </div>
+    </section>
+
+    <footer>Tip: choose a name from the dropdown to see a picture and short info.</footer>
+  </main>
+
+  <script>
+    // Data for inventors. Images use a simple avatar generator as placeholders — replace with real photos if you like.
+    const inventors = {
+      james_gosling: {
+        name: 'James Gosling', lang: 'Java',
+        img: 'https://www.coolkidfacts.com/wp-content/uploads/2023/09/James-Gosling.jpg',
+        bio: 'James Gosling led the team that created Java at Sun Microsystems. Java popularized "write once, run anywhere" and became a dominant enterprise language and the basis for Android development.',
+        born: '1955', origin: 'Canada'
+      },
+      guido_van_rossum: {
+        name: 'Guido van Rossum', lang: 'Python',
+        img: 'https://www.frenchweb.fr/wp-content/uploads/2023/08/guido-van-rossum.png',
+        bio: 'Guido van Rossum created Python with an emphasis on readability and simplicity; Python is now widely used in scripting, web development, data science, and education.',
+        born: '1956', origin: 'Netherlands'
+      },
+      dennis_ritchie: {
+        name: 'Dennis Ritchie', lang: 'C',
+        img: 'https://tse3.mm.bing.net/th/id/OIP.ekb6Ws-rnrU3Ev36t0PcxgHaKS?rs=1&pid=ImgDetMain&o=7&rm=3',
+        bio: 'Dennis Ritchie designed the C programming language and co-created Unix. C influenced countless languages and remains central to systems programming.',
+        born: '1941', origin: 'USA'
+      },
+      bjarne_stroustrup: {
+        name: 'Bjarne Stroustrup', lang: 'C++',
+        img: 'https://cacm.acm.org/wp-content/uploads/2025/01/012125.BLOG_.Bjarne-Stroustrup-350.jpg',
+        bio: 'Bjarne Stroustrup created C++ by adding object-oriented features to C; C++ is widely used for systems, performance-critical applications, and game engines.',
+        born: '1950', origin: 'Denmark'
+      },
+      brendan_eich: {
+        name: 'Brendan Eich', lang: 'JavaScript',
+        img: 'https://www.masaischool.com/blog/content/images/wordpress/2022/04/Brendan-Eich.png',
+        bio: 'Brendan Eich created JavaScript in the browser to enable interactive web pages. JavaScript is now the dominant language for client-side web development and has grown server-side as well.',
+        born: '1961', origin: 'USA'
+      },
+      rasmus_lerdorf: {
+        name: 'Rasmus Lerdorf', lang: 'PHP',
+        img: 'https://tse3.mm.bing.net/th/id/OIP.jcEpg1S_HYQdHHT-mSSe3gHaHb?rs=1&pid=ImgDetMain&o=7&rm=3',
+        bio: 'Rasmus Lerdorf created the original PHP tools for building dynamic web pages; PHP powered many early websites and remains widely used for server-side web applications.',
+        born: '1968', origin: 'Greenland/Denmark'
+      },
+      yukihiro_matsumoto: {
+        name: 'Yukihiro Matsumoto (Matz)', lang: 'Ruby',
+        img: 'https://th.bing.com/th/id/R.85e51124c4b1fa0c5376a3e5a0720327?rik=1ciF3Ixo354WFg&riu=http%3a%2f%2fsiliconangle.com%2ffiles%2f2011%2f08%2fmatz.jpg&ehk=kgO1BLchwxUuPzHQlJtmw3JHR7T6ZcaIdKZeT%2bafMog%3d&risl=&pid=ImgRaw&r=0',
+        bio: 'Yukihiro Matsumoto created Ruby to emphasize programmer happiness and productivity; the language is known for its elegant syntax and the Ruby on Rails web framework.',
+        born: '1965', origin: 'Japan'
+      },
+      anders_hejlsberg: {
+        name: 'Anders Hejlsberg', lang: 'C#',
+        img: 'https://th.bing.com/th/id/R.71e4cd73b64ae082b3cbddd58e9bf4d6?rik=LrRAnWUq4Kg6XA&riu=http%3a%2f%2fthecrazyprogrammer.com%2fwp-content%2fuploads%2f2022%2f08%2fAnders-Hejlsberg-Biography.jpeg&ehk=OZ8zjGtXguL0tUWvzEdw86SA2g1rW2HBE0YZneYwdBw%3d&risl=&pid=ImgRaw&r=0',
+        bio: 'Anders Hejlsberg led the design of C# at Microsoft; C# is a modern, type-safe language primarily used with the .NET platform for a wide range of applications.',
+        born: '1960', origin: 'Denmark'
+      },
+      grace_hopper: {
+        name: 'Grace Hopper', lang: 'COBOL',
+        img: 'https://images.squarespace-cdn.com/content/v1/5f19d0798b32c705735ce878/1595547396387-UTFZWYGY8BZQ122I3910/grace-hopper-hopper-militarypportrait.jpeg',
+        bio: 'Grace Hopper was a pioneering computer scientist and naval officer who helped develop early compilers and influenced the creation of COBOL, a language for business data processing.',
+        born: '1906', origin: 'USA'
+      },
+      john_mccarthy: {
+        name: 'John McCarthy', lang: 'Lisp',
+        img: 'https://onlinelibrary.wiley.com/cms/asset/0f768dba-2a97-482c-bfa4-50f73806a131/aaaibf01327-gra-0001-m.jpg',
+        bio: 'John McCarthy invented Lisp, one of the earliest programming languages for symbolic processing; Lisp influenced AI research and many later languages.',
+        born: '1927', origin: 'USA'
+      }
+    };
+
+    const select = document.getElementById('inventor');
+    const portraitImg = document.getElementById('portraitImg');
+    const nameEl = document.getElementById('name');
+    const langEl = document.getElementById('lang');
+    const bioEl = document.getElementById('bio');
+    const bornEl = document.getElementById('born');
+    const originEl = document.getElementById('origin');
+
+    function showInventor(key){
+      const data = inventors[key];
+      portraitImg.src = data.img;
+      portraitImg.alt = data.name;
+      nameEl.textContent = data.name;
+      langEl.textContent = data.lang;
+      bioEl.textContent = data.bio;
+      bornEl.textContent = 'Born: ' + data.born;
+      originEl.textContent = 'Origin: ' + data.origin;
+
+      // ✅ Only James Gosling in SQUARE, all others in CIRCLE
+      const portrait = document.getElementById('portrait');
+      if(key === 'james_gosling'){
+        // ✅ James Gosling: SQUARE + BORDER
+        portrait.style.borderRadius = '10px';
+        portraitImg.style.borderRadius = '10px';
+        portrait.style.border = '3px solid #2563eb';
+      } else {
+        // ✅ Others: CIRCLE
+        portrait.style.borderRadius = '50%';
+        portraitImg.style.borderRadius = '50%';
+        portrait.style.border = '3px solid #e2e8f0';
+      }
+    }
+
+    // initial
+    showInventor(select.value);
+    select.addEventListener('change', e => showInventor(e.target.value));
+
+    // bonus: keyboard shortcuts (1..9,0)
+    window.addEventListener('keydown', (e) => {
+      if(window.document.activeElement.tagName.toLowerCase() === 'input') return;
+      const idxMap = [
+        'james_gosling','guido_van_rossum','dennis_ritchie','bjarne_stroustrup','brendan_eich',
+        'rasmus_lerdorf','yukihiro_matsumoto','anders_hejlsberg','grace_hopper','john_mccarthy'
+      ];
+      if(e.key >= '0' && e.key <= '9'){
+        const num = (e.key === '0') ? 10 : parseInt(e.key,10);
+        const key = idxMap[num-1];
+        if(key){ select.value = key; showInventor(key); }
+      }
+    });
+  </script>
+</body>
+</html>  
